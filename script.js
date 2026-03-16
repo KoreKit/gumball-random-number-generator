@@ -10,3 +10,16 @@ document.getElementById("generateBtn").addEventListener("click", function() {
     number.textContent = randomNum;
     gumball.classList.remove("hidden");
 });
+
+document.getElementById("generateBtn").addEventListener("click", function() {
+
+    const machine = document.querySelector(".machine");
+
+    // Add shake class
+    machine.classList.add("shake");
+
+    // Remove it after animation ends
+    setTimeout(() => {
+        machine.classList.remove("shake");
+    }, 400);
+});
