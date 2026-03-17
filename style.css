@@ -15,6 +15,44 @@ body {
     display: block;
 }
 
+/* MINI GUMBALLS (inside the globe) */
+.mini {
+    position: absolute;
+    width: 30px;   /* medium size */
+    height: 30px;
+    border-radius: 50%;
+}
+
+/* Exact colors from your PNG */
+.red    { background: #E74C3C; }
+.blue   { background: #3498DB; }
+.green  { background: #2ECC71; }
+.yellow { background: #F1C40F; }
+.orange { background: #E67E22; }
+.pink   { background: #FF66CC; }
+
+/* Positions matched to your uploaded image */
+.red    { top: 32%; left: 38%; }
+.blue   { top: 28%; left: 55%; }
+.green  { top: 45%; left: 33%; }
+.yellow { top: 48%; left: 52%; }
+.orange { top: 60%; left: 40%; }
+.pink   { top: 62%; left: 57%; }
+
+/* JITTER ANIMATION */
+@keyframes jitter {
+    0%   { transform: translate(0, 0); }
+    25%  { transform: translate(-2px, 1px); }
+    50%  { transform: translate(2px, -1px); }
+    75%  { transform: translate(-1px, -2px); }
+    100% { transform: translate(0, 0); }
+}
+
+.jitter {
+    animation: jitter 0.5s ease; /* medium duration */
+}
+
+/* NUMBER GUMBALL */
 .gumball {
     position: absolute;
     width: 60px;
@@ -26,23 +64,9 @@ body {
     justify-content: center;
     font-size: 28px;
     font-weight: bold;
-    top: 72%;       /* matches your live site */
+    top: 72%;
     left: 50%;
     transform: translateX(-50%);
-}
-
-/* MACHINE SHAKE ANIMATION */
-@keyframes machine-shake {
-    0% { transform: translateX(0); }
-    20% { transform: translateX(-4px); }
-    40% { transform: translateX(4px); }
-    60% { transform: translateX(-3px); }
-    80% { transform: translateX(3px); }
-    100% { transform: translateX(0); }
-}
-
-.shake {
-    animation: machine-shake 0.4s ease;
 }
 
 button {
