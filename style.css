@@ -15,29 +15,38 @@ body {
     display: block;
 }
 
-/* MINI GUMBALLS (inside the globe) */
-.mini {
+/* GLOBE AREA (overlay on the glass) */
+.globe {
     position: absolute;
-    width: 30px;   /* medium size */
-    height: 30px;
-    border-radius: 50%;
+    top: 8%;
+    left: 15%;
+    width: 70%;
+    height: 55%;
+    pointer-events: none;
 }
 
-/* Exact colors from your PNG */
-.red    { background: #E74C3C; }
-.blue   { background: #3498DB; }
-.green  { background: #2ECC71; }
-.yellow { background: #F1C40F; }
-.orange { background: #E67E22; }
-.pink   { background: #FF66CC; }
+/* MINI GUMBALLS (image-based) */
+.mini {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+}
 
-/* Positions matched to your uploaded image */
-.red    { top: 32%; left: 38%; }
-.blue   { top: 28%; left: 55%; }
-.green  { top: 45%; left: 33%; }
-.yellow { top: 48%; left: 52%; }
-.orange { top: 60%; left: 40%; }
-.pink   { top: 62%; left: 57%; }
+/* Recoloring using CSS filters */
+.red    { filter: hue-rotate(330deg) saturate(2); }
+.blue   { filter: hue-rotate(200deg) saturate(2); }
+.green  { filter: none; } /* original */
+.yellow { filter: hue-rotate(60deg) saturate(2); }
+.orange { filter: hue-rotate(20deg) saturate(2); }
+.pink   { filter: hue-rotate(300deg) saturate(2); }
+
+/* Positions inside the globe */
+.red    { top: 10%; left: 30%; }
+.blue   { top: 5%;  left: 60%; }
+.green  { top: 35%; left: 25%; }
+.yellow { top: 38%; left: 60%; }
+.orange { top: 60%; left: 35%; }
+.pink   { top: 62%; left: 65%; }
 
 /* JITTER ANIMATION */
 @keyframes jitter {
@@ -49,7 +58,7 @@ body {
 }
 
 .jitter {
-    animation: jitter 0.5s ease; /* medium duration */
+    animation: jitter 0.5s ease;
 }
 
 /* NUMBER GUMBALL */
@@ -75,3 +84,4 @@ button {
     font-size: 18px;
     cursor: pointer;
 }
+
