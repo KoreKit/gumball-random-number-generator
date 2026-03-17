@@ -4,7 +4,7 @@ document.getElementById("generateBtn").addEventListener("click", function () {
     const minis = document.querySelectorAll(".mini");
     minis.forEach(ball => {
         ball.classList.add("jitter");
-        setTimeout(() => ball.classList.remove("jitter"), 500); // medium duration
+        setTimeout(() => ball.classList.remove("jitter"), 500);
     });
 
     // RANDOM NUMBER
