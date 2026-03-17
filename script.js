@@ -1,16 +1,15 @@
 document.getElementById("generateBtn").addEventListener("click", function () {
 
-    // MACHINE SHAKE
-    const machine = document.querySelector(".machine");
-    machine.classList.add("shake");
-
-    setTimeout(() => {
-        machine.classList.remove("shake");
-    }, 400);
+    // JITTER ALL INTERNAL GUMBALLS
+    const minis = document.querySelectorAll(".mini");
+    minis.forEach(ball => {
+        ball.classList.add("jitter");
+        setTimeout(() => ball.classList.remove("jitter"), 500); // medium duration
+    });
 
     // RANDOM NUMBER
     const randomNum = Math.floor(Math.random() * 30) + 1;
 
-    // UPDATE GUMBALL
+    // UPDATE NUMBER GUMBALL
     document.getElementById("gumball").textContent = randomNum;
 });
