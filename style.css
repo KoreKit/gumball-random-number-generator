@@ -1,76 +1,106 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f7f7f7;
+// Your 6 gumball colors
+const ballImages = [
+    "images/ball-blue.png",
+    "images/ball-pink.png",
+    "images/ball-green.png",
+    "images/ball-red.png",
+    "images/ball-orange.png",
+    "images/ball-yellow.png"
+];
+
+// Approximate layout based on your reference image
+// (You can tweak these if needed)
+const initialPositions = [
+    {top: 20, left: 80},
+    {top: 40, left: 120},
+    {top: 60, left: 50},
+    {top: 90, left: 140},
+    {top: 110, left: 90},
+    {top: 130, left: 40},
+    {top: 150, left: 120},
+    {top: 170, left: 70},
+    {top: 190, left: 100},
+    {top: 200, left: 40},
+    {top: 210, left: 150},
+    {top: 160, left: 160},
+    {top: 100, left: 10},
+    {top: 50, left: 160}
+];
+
+// Duplicate colors to match number of positions
+let globeBalls = [];
+
+function createBalls() {
+    const globe = document.getElementById("globe");
+    globe.innerHTML = "";
+    globeBalls = [];
+
+    for (let i = 0; i < initialPositions.length; i++) {
+        const img = document.createElement("img");
+        img.src = ballImages[i % ballImages.length];
+        img.classList.add("gumball");
+        img.style.top = initialPositions[i].top + "px";
+        img.style.left = initialPositions[i].left + "px";
+        globe.appendChild(img);
+        globeBalls.push(img);
+    }
 }
 
-h1 {
-    margin-top: 20px;
+createBalls();
+
+// No-repeat number list
+let numberList = [];
+
+function resetNumbers() {
+    const min = parseInt(document.getElementById("min").value);
+    const max = parseInt(document.getElementById("max").value);
+
+    numberList = [];
+    for (let i = min; i <= max; i++) numberList.push(i);
+
+    // Shuffle
+    for (let i = numberList.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [numberList[i], numberList[j]] = [numberList[j], numberList[i]];
+    }
 }
 
-.controls {
-    margin: 20px;
-    font-size: 18px;
+resetNumbers();
+
+// Scatter animation
+function scatterBalls() {
+    globeBalls.forEach(ball => {
+        const newTop = Math.random() * 160 + 20;
+        const newLeft = Math.random() * 160 + 20;
+        ball.style.top = newTop + "px";
+        ball.style.left = newLeft + "px";
+    });
 }
 
-.controls input {
-    width: 60px;
-    font-size: 16px;
-}
+// Dispense logic
+document.getElementById("dispenseBtn").addEventListener("click", () => {
+    if (numberList.length === 0) {
+        alert("All numbers used — resetting!");
+        resetNumbers();
+    }
 
-.machine-container {
-    position: relative;
-    width: 350px;
-    margin: 0 auto;
-}
+    scatterBalls();
 
-.machine {
-    width: 100%;
-    pointer-events: none;
-}
+    const selectedNumber = numberList.pop();
 
-#globe {
-    position: absolute;
-    top: 48px;
-    left: 50%;
-    width: 230px;
-    height: 230px;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    overflow: hidden;
-    pointer-events: none;
-}
+    // Pick a random ball for color
+    const selectedBall = globeBalls[Math.floor(Math.random() * globeBalls.length)];
 
-.gumball {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    transition: transform 0.5s ease, top 0.5s ease, left 0.5s ease;
-}
+    const output = document.getElementById("output-ball");
+    output.style.backgroundImage = `url(${selectedBall.src})`;
+    output.textContent = selectedNumber;
 
-#output-area {
-    position: absolute;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 80px;
-}
-
-#output-ball {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 32px;
-    font-weight: bold;
-    color: white;
-    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-}
+    // Drop animation
+    output.style.opacity = 0;
+    output.style.transform = "translateY(-20px)";
+    setTimeout(() => {
+        output.style.opacity = 1;
+        output.style.transform = "translateY(0)";
+    }, 300);
+});
 
