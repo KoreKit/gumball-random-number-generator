@@ -2,36 +2,35 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gumball Random Number Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <h1>Gumball Random Number Generator</h1>
+<h1>Gumball Random Number Generator</h1>
 
-    <div class="machine">
-        <img src="machine.png" class="machine-img">
+<div class="controls">
+    <label>Min: <input type="number" id="min" value="1"></label>
+    <label>Max: <input type="number" id="max" value="30"></label>
+    <button id="dispenseBtn">Dispense</button>
+</div>
 
-        <!-- GLOBE OVERLAY -->
-        <div class="globe">
-            <img src="gumball.png" class="mini red">
-            <img src="gumball.png" class="mini blue">
-            <img src="gumball.png" class="mini green">
-            <img src="gumball.png" class="mini yellow">
-            <img src="gumball.png" class="mini orange">
-            <img src="gumball.png" class="mini pink">
-        </div>
+<div class="machine-container">
+    <img src="images/machine.png" class="machine">
 
-        <!-- NUMBER GUMBALL -->
-        <div id="gumball" class="gumball">?</div>
+    <div id="globe">
+        <!-- Gumballs will be injected here by JS -->
     </div>
 
-    <button id="generateBtn">Generate Number</button>
+    <div id="output-area">
+        <div id="output-ball"></div>
+    </div>
+</div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
+
 
 
 
