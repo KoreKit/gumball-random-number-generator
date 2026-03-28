@@ -31,7 +31,7 @@ body {
 /* Perfectly aligned to your 800×1200 PNG */
 #globe {
     position: absolute;
-    top: 180px;        /* vertical offset */
+    top: 60px;        /* vertical offset */
     left: 50%;
     transform: translateX(-50%);
     width: 520px;      /* globe width */
