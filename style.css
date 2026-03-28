@@ -31,11 +31,11 @@ body {
 /* Perfectly aligned to your 800×1200 PNG */
 #globe {
     position: absolute;
-    top: 60px;        /* vertical offset */
+    top: 10px;        /* vertical offset */
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;      /* globe width */
-    height: 100px;     /* globe height */
+    width: 10px;      /* globe width */
+    height: 10px;     /* globe height */
     border-radius: 50%;
     overflow: hidden;
     pointer-events: none;
