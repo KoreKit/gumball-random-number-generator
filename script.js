@@ -40,7 +40,7 @@ function loadGumballs() {
         do {
             x = Math.random() * globeWidth;
             y = Math.random() * globeHeight;
-        } while ((x - radius) ** 2 + (y - radius) ** 2 > (radius - 60) ** 2);
+        } while ((x - radius) ** 2 + (y - radius) ** 2 > (radius - 100) ** 2);
 
         img.style.left = x + "px";
         img.style.top = y + "px";
