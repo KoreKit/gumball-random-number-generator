@@ -7,24 +7,28 @@
 </head>
 <body>
 
-<h1>Gumball Random Number Generator</h1>
-
-<div class="controls">
-    <label>Min: <input type="number" id="min" value="1"></label>
-    <label>Max: <input type="number" id="max" value="30"></label>
-    <button id="dispenseBtn">Dispense</button>
+<!-- Teacher Setup Screen -->
+<div id="setup-screen">
+    <h1>Set Number Range</h1>
+    <label>Min: <input type="number" id="minInput" value="1"></label>
+    <label>Max: <input type="number" id="maxInput" value="30"></label>
+    <button id="startBtn">Start Machine</button>
 </div>
 
-<div class="machine-container">
-    <img src="images/machine.png" class="machine">
+<!-- Machine Screen -->
+<div id="machine-screen" class="hidden">
 
-    <div id="globe">
-        <!-- Gumballs will be injected here by JS -->
+    <div class="machine-container">
+        <img src="images/Empty Bubble Gum Machine.png" class="machine">
+
+        <div id="globe"></div>
+
+        <div id="output-area">
+            <div id="output-ball"></div>
+        </div>
     </div>
 
-    <div id="output-area">
-        <div id="output-ball"></div>
-    </div>
+    <button id="dispenseBtn">Dispense</button>
 </div>
 
 <script src="script.js"></script>
