@@ -34,8 +34,8 @@ body {
     top: 60px;        /* vertical offset */
     left: 50%;
     transform: translateX(-50%);
-    width: 520px;      /* globe width */
-    height: 520px;     /* globe height */
+    width: 100px;      /* globe width */
+    height: 100px;     /* globe height */
     border-radius: 50%;
     overflow: hidden;
     pointer-events: none;
