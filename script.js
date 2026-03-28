@@ -27,11 +27,11 @@ document.getElementById("startBtn").onclick = () => {
 };
 
 function loadGumballs() {
-    const globeWidth = 230;
-    const globeHeight = 230;
+    const globeWidth = 520;
+    const globeHeight = 520;
     const radius = globeWidth / 2;
 
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 40; i++) {
         const img = document.createElement("img");
         img.src = gumballImages[Math.floor(Math.random() * gumballImages.length)];
         img.classList.add("gumball");
@@ -40,7 +40,7 @@ function loadGumballs() {
         do {
             x = Math.random() * globeWidth;
             y = Math.random() * globeHeight;
-        } while ((x - radius) ** 2 + (y - radius) ** 2 > (radius - 25) ** 2);
+        } while ((x - radius) ** 2 + (y - radius) ** 2 > (radius - 30) ** 2);
 
         img.style.left = x + "px";
         img.style.top = y + "px";
