@@ -1,106 +1,83 @@
-// Your 6 gumball colors
-const ballImages = [
-    "images/ball-blue.png",
-    "images/ball-pink.png",
-    "images/ball-green.png",
-    "images/ball-red.png",
-    "images/ball-orange.png",
-    "images/ball-yellow.png"
-];
-
-// Approximate layout based on your reference image
-// (You can tweak these if needed)
-const initialPositions = [
-    {top: 20, left: 80},
-    {top: 40, left: 120},
-    {top: 60, left: 50},
-    {top: 90, left: 140},
-    {top: 110, left: 90},
-    {top: 130, left: 40},
-    {top: 150, left: 120},
-    {top: 170, left: 70},
-    {top: 190, left: 100},
-    {top: 200, left: 40},
-    {top: 210, left: 150},
-    {top: 160, left: 160},
-    {top: 100, left: 10},
-    {top: 50, left: 160}
-];
-
-// Duplicate colors to match number of positions
-let globeBalls = [];
-
-function createBalls() {
-    const globe = document.getElementById("globe");
-    globe.innerHTML = "";
-    globeBalls = [];
-
-    for (let i = 0; i < initialPositions.length; i++) {
-        const img = document.createElement("img");
-        img.src = ballImages[i % ballImages.length];
-        img.classList.add("gumball");
-        img.style.top = initialPositions[i].top + "px";
-        img.style.left = initialPositions[i].left + "px";
-        globe.appendChild(img);
-        globeBalls.push(img);
-    }
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f7f7f7;
 }
 
-createBalls();
-
-// No-repeat number list
-let numberList = [];
-
-function resetNumbers() {
-    const min = parseInt(document.getElementById("min").value);
-    const max = parseInt(document.getElementById("max").value);
-
-    numberList = [];
-    for (let i = min; i <= max; i++) numberList.push(i);
-
-    // Shuffle
-    for (let i = numberList.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [numberList[i], numberList[j]] = [numberList[j], numberList[i]];
-    }
+.hidden {
+    display: none;
 }
 
-resetNumbers();
-
-// Scatter animation
-function scatterBalls() {
-    globeBalls.forEach(ball => {
-        const newTop = Math.random() * 160 + 20;
-        const newLeft = Math.random() * 160 + 20;
-        ball.style.top = newTop + "px";
-        ball.style.left = newLeft + "px";
-    });
+/* Setup Screen */
+#setup-screen {
+    margin-top: 40px;
 }
 
-// Dispense logic
-document.getElementById("dispenseBtn").addEventListener("click", () => {
-    if (numberList.length === 0) {
-        alert("All numbers used — resetting!");
-        resetNumbers();
-    }
+#setup-screen input {
+    width: 60px;
+    margin: 0 10px;
+}
 
-    scatterBalls();
+/* Machine Layout */
+.machine-container {
+    position: relative;
+    width: 350px;
+    margin: 20px auto;
+}
 
-    const selectedNumber = numberList.pop();
+.machine {
+    width: 100%;
+    display: block;
+}
 
-    // Pick a random ball for color
-    const selectedBall = globeBalls[Math.floor(Math.random() * globeBalls.length)];
+/* Globe Area (clipped circle) */
+#globe {
+    position: absolute;
+    top: 60px;       /* estimated from image */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 230px;    /* estimated globe width */
+    height: 230px;   /* estimated globe height */
+    border-radius: 50%;
+    overflow: hidden;
+    pointer-events: none;
+}
 
-    const output = document.getElementById("output-ball");
-    output.style.backgroundImage = `url(${selectedBall.src})`;
-    output.textContent = selectedNumber;
+/* Gumballs */
+.gumball {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    transition: transform 0.2s;
+}
 
-    // Drop animation
-    output.style.opacity = 0;
-    output.style.transform = "translateY(-20px)";
-    setTimeout(() => {
-        output.style.opacity = 1;
-        output.style.transform = "translateY(0)";
-    }, 300);
-});
+/* Jumble animation */
+.jumble {
+    animation: shake 0.15s infinite alternate;
+}
+
+@keyframes shake {
+    from { transform: translate(0px, 0px); }
+    to   { transform: translate(3px, -3px); }
+}
+
+/* Output Ball */
+#output-area {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#output-ball {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    line-height: 60px;
+}
 
