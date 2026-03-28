@@ -1,6 +1,6 @@
 function loadGumballs() {
-    const globeWidth = 1000;
-    const globeHeight = 1000;
+    const globeWidth = 100;
+    const globeHeight = 100;
     const radius = globeWidth / 2;
 
     const placed = [];
