@@ -2,38 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gumball Random Number Generator</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="setup-screen">
-    <h1>Set Number Range</h1>
-    <label>Min: <input type="number" id="minInput" value="1"></label>
-    <label>Max: <input type="number" id="maxInput" value="30"></label>
-    <button id="startBtn">Start Machine</button>
-</div>
+    <div id="machine">
+        <img id="machine-img" src="machine.png" alt="Gumball Machine">
 
-<div id="machine-screen" class="hidden">
-
-    <div class="machine-container">
-        <img src="emptybubblegummachine.png" class="machine">
-
-        <!-- Globe container (aligned to your 800×1200 PNG) -->
         <div id="globe"></div>
 
-        <!-- Output ball area -->
-        <div id="output-area">
-            <div id="output-ball"></div>
+        <button id="generate-btn">Generate Number</button>
+
+        <div id="output">
+            <img id="output-gumball" src="" alt="">
+            <p id="output-number"></p>
         </div>
     </div>
 
-    <button id="dispenseBtn">Dispense</button>
-</div>
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
