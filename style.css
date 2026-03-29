@@ -1,80 +1,50 @@
 body {
-    font-family: Arial, sans-serif;
+    background: #f2f2f2;
     text-align: center;
-    background: #f7f7f7;
+    font-family: Arial, sans-serif;
 }
 
-.hidden {
-    display: none;
-}
-
-#setup-screen {
-    margin-top: 40px;
-}
-
-#setup-screen input {
-    width: 60px;
-    margin: 0 10px;
-}
-
-.machine-container {
+#machine {
     position: relative;
+    display: inline-block;
+}
+
+#machine-img {
     width: 800px;
-    margin: 20px auto;
+    height: auto;
 }
 
-.machine {
-    width: 100%;
-    display: block;
-}
-
-/* Perfectly aligned to your 800×1200 PNG */
 #globe {
     position: absolute;
-    top: 165px;        /* vertical offset */
+    top: 165px; /* adjust this ONLY if gumballs look too high/low */
     left: 50%;
     transform: translateX(-50%);
-    width: 390px;      /* globe width */
-    height: 390px;     /* globe height */
-    border-radius: 50%;
-    overflow: hidden;
+    width: 418px;
+    height: 418px;
     pointer-events: none;
 }
 
 .gumball {
     position: absolute;
-    width: 55px;
-    height: 55px;
-    transition: transform 0.2s;
+    width: 45px;
+    height: 45px;
+    pointer-events: none;
 }
 
-.jumble {
-    animation: shake 0.15s infinite alternate;
+#generate-btn {
+    margin-top: 20px;
+    padding: 12px 20px;
+    font-size: 20px;
+    cursor: pointer;
 }
 
-@keyframes shake {
-    from { transform: translate(0px, 0px); }
-    to   { transform: translate(4px, -4px); }
+#output {
+    margin-top: 20px;
 }
 
-/* Output ball positioned at the chute */
-#output-area {
-    position: absolute;
-    bottom: 110px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#output-ball {
-    width: 75px;
-    height: 75px;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    font-size: 32px;
-    font-weight: bold;
-    color: white;
-    line-height: 75px;
+#output-gumball {
+    width: 60px;
+    height: 60px;
 }
 
 
