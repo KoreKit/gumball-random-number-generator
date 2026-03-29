@@ -3,11 +3,12 @@ const outputGumball = document.getElementById("output-gumball");
 const outputNumber = document.getElementById("output-number");
 
 const gumballImages = [
-    "gumball-red.png",
-    "gumball-blue.png",
-    "gumball-green.png",
-    "gumball-yellow.png",
-    "gumball-purple.png"
+    "bluegumball.png",
+    "greengumball.png",
+    "orangegumball.png",
+    "pinkgumball.png",
+    "redgumball.png",
+    "yellowgumball.png"
 ];
 
 const globeWidth = 418;
