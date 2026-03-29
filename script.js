@@ -1,41 +1,55 @@
+const globe = document.getElementById("globe");
+const outputGumball = document.getElementById("output-gumball");
+const outputNumber = document.getElementById("output-number");
+
+const gumballImages = [
+    "gumball-red.png",
+    "gumball-blue.png",
+    "gumball-green.png",
+    "gumball-yellow.png",
+    "gumball-purple.png"
+];
+
+const globeWidth = 418;
+const globeHeight = 418;
+
 function loadGumballs() {
-    const globeWidth = 390;
-    const globeHeight = 390;
-    const radius = globeWidth / 2;
+    globe.innerHTML = "";
 
-    const placed = [];
-    const gumballSize = 45;   // smaller = denser
-    const minSpacing = 48;    // distance between centers
+    const gumballSize = 45;
+    const cols = 7;
+    const rows = 7;
+    const spacing = 55;
 
-    for (let i = 0; i < 70; i++) {
-        const img = document.createElement("img");
-        img.src = gumballImages[Math.floor(Math.random() * gumballImages.length)];
-        img.classList.add("gumball");
+    const startX = (globeWidth - (cols - 1) * spacing) / 2;
+    const startY = (globeHeight - (rows - 1) * spacing) / 2;
 
-        let x, y, valid;
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
 
-        do {
-            x = Math.random() * globeWidth;
-            y = Math.random() * globeHeight;
+            const img = document.createElement("img");
+            img.src = gumballImages[Math.floor(Math.random() * gumballImages.length)];
+            img.classList.add("gumball");
 
-            const distFromCenter = Math.sqrt((x - radius) ** 2 + (y - radius) ** 2);
-            const insideCircle = distFromCenter < (radius - gumballSize / 2);
+            const x = startX + c * spacing;
+            const y = startY + r * spacing;
 
-            valid = insideCircle && placed.every(p => {
-                const dx = p.x - x;
-                const dy = p.y - y;
-                return Math.sqrt(dx * dx + dy * dy) > minSpacing;
-            });
+            img.style.left = (x - gumballSize / 2) + "px";
+            img.style.top = (y - gumballSize / 2) + "px";
 
-        } while (!valid);
-
-        placed.push({ x, y });
-
-        img.style.left = (x - gumballSize / 2) + "px";
-        img.style.top = (y - gumballSize / 2) + "px";
-
-        globe.appendChild(img);
+            globe.appendChild(img);
+        }
     }
 }
+
+document.getElementById("generate-btn").addEventListener("click", () => {
+    const randomIndex = Math.floor(Math.random() * gumballImages.length);
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+    outputGumball.src = gumballImages[randomIndex];
+    outputNumber.textContent = randomNumber;
+});
+
+loadGumballs();
 
 
