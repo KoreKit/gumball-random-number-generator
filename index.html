@@ -5,27 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gumball Random Number Generator</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <main class="app">
+        <header class="app__header">
+            <h1 class="app__title">Gumball Random Number Generator</h1>
+        </header>
 
-    <div id="machine">
-        <img id="machine-img" src="emptybubblegummachine.png" alt="Gumball Machine">
+        <section class="controls" aria-label="Number range settings">
+            <div class="controls__field">
+                <label class="controls__label" for="min-input">Minimum</label>
+                <input class="controls__input" type="number" id="min-input" value="1" min="-999999" max="999999" inputmode="numeric">
+            </div>
+            <span class="controls__divider" aria-hidden="true">to</span>
+            <div class="controls__field">
+                <label class="controls__label" for="max-input">Maximum</label>
+                <input class="controls__input" type="number" id="max-input" value="100" min="-999999" max="999999" inputmode="numeric">
+            </div>
+        </section>
+        <p class="controls__error" id="range-error" role="alert" hidden></p>
 
-        <div id="globe"></div>
+        <section class="machine" aria-label="Gumball machine">
+            <div class="machine__frame">
+                <img
+                    class="machine__art"
+                    src="emptybubblegummachine.png"
+                    alt="Red gumball machine with empty glass globe"
+                    width="1536"
+                    height="1024"
+                >
+                <div class="machine__globe" id="globe" aria-hidden="true"></div>
+                <div class="machine__chute" id="chute">
+                    <div class="result-gumball" id="result-gumball" hidden>
+                        <img class="result-gumball__img" id="result-gumball-img" src="" alt="">
+                        <span class="result-gumball__number" id="result-number" aria-live="polite"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <button id="generate-btn">Generate Number</button>
+        <button class="generate-btn" id="generate-btn" type="button">
+            Generate Number
+        </button>
+    </main>
 
-        <div id="output">
-            <img id="output-gumball" src="" alt="">
-            <p id="output-number"></p>
-        </div>
-    </div>
+    <audio id="machine-sound" class="machine-sound" src="gumball-machine.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-

@@ -1,53 +1,417 @@
+/* --- Design tokens --- */
+:root {
+    --bg: #f4f1ec;
+    --surface: #ffffff;
+    --text: #2a2420;
+    --text-muted: #6b635c;
+    --accent: #e63946;
+    --accent-hover: #c92f3b;
+    --accent-soft: rgba(230, 57, 70, 0.12);
+    --border: #e0d8cf;
+    --shadow: 0 12px 40px rgba(42, 36, 32, 0.08);
+    --radius: 14px;
+    --machine-max: min(92vw, 520px);
+    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Fallback until JS calibrates from the machine artwork */
+    --globe-top: 10.1%;
+    --globe-left: 50%;
+    --globe-size: 32.1%;
+    --chute-bottom: 6%;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 body {
-    background: #f2f2f2;
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Nunito", system-ui, sans-serif;
+    line-height: 1.5;
+}
+
+/* --- Layout --- */
+.app {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 3rem;
     text-align: center;
-    font-family: Arial, sans-serif;
 }
 
-#machine {
+.app__header {
+    margin-bottom: 1.75rem;
+}
+
+.app__title {
+    margin: 0 0 0.35rem;
+    font-size: clamp(1.5rem, 4.5vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+/* --- Range controls --- */
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    padding: 1rem 1.25rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+
+.controls__field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    min-width: 7rem;
+}
+
+.controls__label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.controls__input {
+    width: 100%;
+    min-width: 6.5rem;
+    padding: 0.55rem 0.75rem;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    background: var(--bg);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.controls__input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.controls__divider {
+    align-self: center;
+    padding-bottom: 0.55rem;
+    font-weight: 700;
+    color: var(--text-muted);
+}
+
+.controls__error {
+    margin: 0.35rem 0 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.controls__error[hidden] {
+    display: none;
+}
+
+/* --- Machine frame --- */
+.machine {
+    margin: 0.5rem 0 1.25rem;
+}
+
+.machine__frame {
     position: relative;
-    display: inline-block;
+    width: var(--machine-max);
+    margin: 0 auto;
 }
 
-#machine-img {
-    width: 800px;
+.machine__art {
+    display: block;
+    width: 100%;
     height: auto;
+    user-select: none;
+    pointer-events: none;
 }
 
-/* THE GLOBE — THIS IS WHAT WAS BREAKING YOUR SITE */
-#globe {
+.machine__globe {
     position: absolute;
-    top: 165px; /* adjust this ONLY if gumballs look too high/low */
-    left: 50%;
+    top: var(--globe-top);
+    left: var(--globe-left);
+    width: var(--globe-size);
+    aspect-ratio: 1;
     transform: translateX(-50%);
-    width: 418px;
-    height: 418px;
-    overflow: hidden; /* keeps gumballs inside the bowl */
+    overflow: hidden;
+    border-radius: 50%;
     pointer-events: none;
+    z-index: 1;
 }
 
-.gumball {
+.machine__globe.globe--jumbling {
+    animation: globe-shake 0.28s ease-in-out infinite;
+}
+
+@keyframes globe-shake {
+    0%, 100% { transform: translateX(-50%) rotate(0deg); }
+    25% { transform: translateX(calc(-50% - 1px)) rotate(-0.4deg); }
+    75% { transform: translateX(calc(-50% + 1px)) rotate(0.4deg); }
+}
+
+.machine__chute {
     position: absolute;
-    width: 45px;
-    height: 45px;
+    left: 50%;
+    bottom: var(--chute-bottom);
+    width: 14%;
+    aspect-ratio: 1;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* --- Gumball slots (anchored inside circular globe) --- */
+.gumball-slot {
+    position: absolute;
+    width: 19%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    will-change: transform;
+    animation: idle-drift var(--float-duration, 5s) ease-in-out infinite;
+    animation-delay: var(--float-delay, 0s);
+}
+
+.gumball-slot__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0.92;
+}
+
+.gumball-slot--base {
+    animation-name: idle-drift-base;
+}
+
+@keyframes idle-drift-base {
+    0%, 100% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(
+            calc(-50% + var(--drift-x, 1px)),
+            calc(-50% + var(--drift-y, 0px))
+        );
+    }
+}
+
+.globe--jumbling .gumball-slot {
+    animation: jumble var(--jumble-duration, 0.32s) ease-in-out infinite;
+    animation-delay: var(--jumble-delay, 0s);
+}
+
+@keyframes idle-drift {
+    0%, 100% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(
+            calc(-50% + var(--drift-x, 2px)),
+            calc(-50% + var(--drift-y, -3px))
+        );
+    }
+}
+
+@keyframes jumble {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    25% {
+        transform: translate(
+            calc(-50% + var(--jx, 3%)),
+            calc(-50% + var(--jy, -2%))
+        ) rotate(10deg);
+    }
+    50% {
+        transform: translate(
+            calc(-50% + var(--jx2, -2%)),
+            calc(-50% + var(--jy2, 3%))
+        ) rotate(-8deg);
+    }
+    75% {
+        transform: translate(
+            calc(-50% + var(--jx3, 2%)),
+            calc(-50% + var(--jy3, 2%))
+        ) rotate(6deg);
+    }
+}
+
+/* --- Result gumball (dispense + rest) --- */
+.result-gumball {
+    position: relative;
+    width: clamp(48px, 18vw, 72px);
+    aspect-ratio: 1;
+    opacity: 0;
+    transform: translateY(-120%) scale(0.4);
+}
+
+.result-gumball__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+.result-gumball__number {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(0.65rem, 2.8vw, 0.95rem);
+    font-weight: 800;
+    color: #fff;
+    text-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.55),
+        0 0 6px rgba(0, 0, 0, 0.25);
+    line-height: 1;
+    padding: 0 4px;
+    word-break: break-all;
+}
+
+.result-gumball.is-dispensing {
+    animation: dispense 0.9s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+.result-gumball.is-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+@keyframes dispense {
+    0% {
+        opacity: 0;
+        transform: translateY(-130%) scale(0.35);
+    }
+    40% {
+        opacity: 1;
+    }
+    75% {
+        transform: translateY(8%) scale(1.06);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.machine-sound {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
     pointer-events: none;
 }
 
-#generate-btn {
-    margin-top: 20px;
-    padding: 12px 20px;
-    font-size: 20px;
+/* --- Generate button --- */
+.generate-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 12rem;
+    padding: 0.85rem 2rem;
+    border: none;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
     cursor: pointer;
+    box-shadow: 0 6px 20px rgba(230, 57, 70, 0.35);
+    transition:
+        background var(--transition),
+        transform var(--transition),
+        box-shadow var(--transition),
+        opacity var(--transition);
 }
 
-#output {
-    margin-top: 20px;
+.generate-btn:hover:not(:disabled) {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(230, 57, 70, 0.4);
 }
 
-#output-gumball {
-    width: 60px;
-    height: 60px;
+.generate-btn:active:not(:disabled) {
+    transform: translateY(0);
 }
 
+.generate-btn:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
 
+.generate-btn:focus-visible {
+    outline: 3px solid var(--accent-soft);
+    outline-offset: 3px;
+}
 
+/* --- Responsive --- */
+@media (max-width: 480px) {
+    .app {
+        padding: 1.25rem 1rem 2.5rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .controls__field {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .controls__divider {
+        padding-bottom: 0;
+    }
+
+    :root {
+        --machine-max: min(96vw, 400px);
+    }
+}
+
+@media (min-width: 768px) {
+    :root {
+        --machine-max: 560px;
+    }
+
+    .app {
+        max-width: 720px;
+        padding-top: 2.5rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gumball-slot,
+    .gumball-slot--base,
+    .machine__globe.globe--jumbling {
+        animation: none;
+    }
+
+    .result-gumball.is-dispensing {
+        animation: none;
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
